@@ -1,0 +1,12 @@
+streamlit
+langchain
+langchain-core
+langchain-community
+langchain-openai
+langchain-pinecone
+openai
+pinecone
+pinecone-client
+wikipedia
+duckduckgo-search
+
