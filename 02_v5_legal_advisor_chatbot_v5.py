@@ -31,7 +31,8 @@ if not user_question.strip('Enter Your Query'):
 
 # *********************** BACK END CODE ***********************
 # ---------- DEFINING EMBEDDING & LLM MODEL ----------
-openai_api_key='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'
+openai_api_key = st.secrets.get("OPENAI_API_KEY", os.environ.get("OPENAI_API_KEY"))
+
 # embedding model
 embedding_model=OpenAIEmbeddings(model='text-embedding-3-large',api_key=openai_api_key)
 # llm model
@@ -40,12 +41,12 @@ llm = ChatOpenAI(model="gpt-3.5-turbo", api_key=openai_api_key)
 # # ---------- CREATING VECTOR DB ----------
 
 # below 4 are important inpofrmationneed to re use the existing vector DB
-pinecone_api_key='pcsk_46Pwiz_3RKCHvUbDTpVXkLUaCreRJeEoe74GZ8oSAEFqksbXs1rfZ78WBMVvg7DkMxsMb4'
+pinecone_api_key = st.secrets.get("PINECONE_API_KEY", os.environ.get("PINECONE_API_KEY"))
 index_name='legal-advisor-chatbot-index'
 pinecone_env = 'us-east-1-aws'
 
 pc=Pinecone(api_key=pinecone_api_key)
-os.environ['PINECONE_API_KEY']=pinecone_api_key
+# os.environ['PINECONE_API_KEY']=pinecone_api_key # do i still need this?
 
 
 vectorstore=PineconeVectorStore.from_existing_index(
