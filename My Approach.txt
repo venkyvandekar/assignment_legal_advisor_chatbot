@@ -1,0 +1,62 @@
+__________My Approach__________
+Architecture:
+START-->User query-->searches in Pinecone(our cloud VectorDB storage) and Wikipedia, DuckDuckDuckGo will do online search--->
+combine the results--> pass it to llm--> display the result
+1]VectorDB
+-Hardware limitation:
+currently I am having i3 10th Gen processor and 8 GB RAM in my laptop so processing of PDF and weblinks was taking too much time
+-Workaround:
+I used google collab free version for ipynb notebook file, i linked it to my google drive to it and uploaded pdf files in google drive
+This enabled me faster processing as compared to my laptop
+I created free version of Pinecone cloud account and was able to process and store embeddings from pdf file in Pinecone cloud account
+Note:  due to the limitation of Pinecone Cloud Storage only few pdf file had to be processed but this limitation we will solve it in next steps
+VectorDB creation code is in --> 01_v2_legal_advisor_chatbot_vectordb.py
+
+2] Chat Prompt template:
+I created my chat prompt template based on requirements provided and below is the way in which wrote it
+After this I asked chat gpt to to fine tune my prompt the fine tuned prompt and chat gpt prompt I used in my original code as it was much better than mine
+My Prompt:
+('system','you are a friendly helpful Legal Advisor who that provides Indian citizens with initial guidance on legal matters in layman language
+your replies should be related to legal aspects
+first you should classify queries into categories like civil, criminal, labor, traffic, property law etc
+provide with initial guidance or required info in layman language
+and in the last display links to official legal documents or articles
+You will support English, Hindi, Bengali, Gujarati, Kannada, Malayalam, Marathi, Tamil, Telugu, Urdu, Punjabi and all the Indian Languages only
+your default language for reply should be English language
+if user explicitly mentions to reply in certain Indian language then reply in that Indian language
+if you don't know that language mention you don't know and reply in English
+if user asks a question in certain language reply in that language
+{context}')
+
+3] Chatbot
+I used RAG architecture
+Based on users query we were retrieving the relevant information and then passing it to llm
+due to the limitation of Pinecone Cloud Storage only few pdf and links embeddings are store
+what if the question is different than pdf processed
+to resolve this limitation I introduced wikipedia-query-run and duckduckgp-search-run tools to search for relevant articles in internet
+all these relevant articles from Pinecone, Wikipedia, DuckDuckGo we will combine and give it to llm to generate final output
+Chatbot code is in --> 02_v5_legal_advisor_chatbot_v5.py
+
+
+__________Major Challenges Faced__________
+1] ChromaDB Issue:
+I used google collab free version for ipynb notebook file, i linked it to my google drive
+I created a persistent vector database in my google drive
+once the persistent vector I formed I downloaded persistent vector db in my personal laptop also the google collab ipynb file
+However this was a wrong approach as git hub only allows 25 mb file to be uploaded Hence I had to shift to Pine Cone
+
+2] Streamlit Secret API Key issues
+I was not aware that on streamlit we had to store the API keys in Secret.toml file
+
+__________Future Improvements__________
+1) based on demand we can use multiple diverse pdf, links and move to paid version of pinecone to increase storage
+2) we can try with different chunk size and chunk overlap in our splitter
+3) we can use better search tools which require api keys
+4) we can use different llm model for vectordb search 
+5) we can use high end llm models
+
+
+
+
+
+ 
