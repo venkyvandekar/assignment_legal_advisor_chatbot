@@ -6,7 +6,5 @@ langchain-openai
 langchain-pinecone
 openai
 pinecone
-pinecone-client
 wikipedia
 duckduckgo-search
-
